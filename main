@@ -1,0 +1,30 @@
+import pandas as pd
+from sklearn.tree import DecisionTreeClassifier
+from sklearn.model_selection import train_test_split
+from sklearn.metrics import accuracy_score
+#import the data
+music_data = pd.read_csv('music.csv')
+
+#cleaning or preparing the data by removing duplicates if any
+# input dataset
+X = music_data.drop(columns=['genre'])
+
+# output dataset only have predictions for our answer
+y = music_data['genre']
+
+# build a model using machine learning alogorithm
+# very simple algorithm descision tree
+
+model = DecisionTreeClassifier()
+# since we 20,23,25 for male we dont have 21 age male similar to female let see our model is predict or not
+model.fit(X,y)
+# our data is 2d array so outer array inner array inner arrays are inputs
+predictions = model.predict([ [21, 1], [22, 0]])
+predictions
+
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2) # 20% test data set size
+model.fit(X_train, y_train)
+predictions = model.predict(X_test)
+
+score = accuracy_score(y_test, predictions) # expectedvalues, actual values
+score # 1.0 => 100% 0.26=> 26%
